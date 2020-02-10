@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Tenant;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Theme extends Model
+class Response extends Model
 {
     use SoftDeletes;
     
@@ -15,7 +15,7 @@ class Theme extends Model
      * @var array
      */
     protected $fillable = [
-        'form_id',
+        'slug', 'form_id'
     ];
 
     /**
@@ -24,5 +24,13 @@ class Theme extends Model
     public function form()
     {
         return $this->belongsTo(Form::class);
+    }
+
+    /**
+     * Answers
+     */
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
     }
 }

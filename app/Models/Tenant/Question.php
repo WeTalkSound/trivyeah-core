@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Tenant;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Section extends Model
+class Question extends Model
 {
     use SoftDeletes;
     
@@ -15,14 +15,14 @@ class Section extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'form_id'
+        'section_id', 'type', 'meta'
     ];
 
     /**
-     * Form
+     * Section
      */
-    public function form()
+    public function section()
     {
-        return $this->belongsTo(Form::class);
+        return $this->belongsTo(Section::class);
     }
 }
