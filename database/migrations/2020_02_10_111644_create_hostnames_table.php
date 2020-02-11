@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFormsTable extends Migration
+class CreateHostnamesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,16 @@ class CreateFormsTable extends Migration
      */
     public function up()
     {
-        Schema::create('forms', function (Blueprint $table) {
+        Schema::create('hostnames', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
-            $table->string('slug')->unique();
+            $table->string('fqdn');
+            $table->string('protocol');
+            $table->uuid('organization_id');
             $table->timestamps();
-            $table->softDeletes();
+
+            $table->foreign('organization_id')
+            ->references('id')->on('organizations')
+            ->onDelete('cascade');
         });
     }
 
@@ -29,6 +33,6 @@ class CreateFormsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('forms');
+        Schema::dropIfExists('hostnames');
     }
 }
