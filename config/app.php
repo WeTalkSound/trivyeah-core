@@ -174,6 +174,7 @@ return [
         // System\Providers\BroadcastServiceProvider::class,
         System\Providers\EventServiceProvider::class,
         System\Providers\RouteServiceProvider::class,
+        System\Providers\TenantServiceProvider::class,
 
     ],
 

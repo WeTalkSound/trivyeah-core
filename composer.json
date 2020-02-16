@@ -34,11 +34,12 @@
     "autoload": {
         "psr-4": {
             "System\\": "system/",
-            "Tenant\\": "tenant"
+            "Tenant\\": "tenant",
+            "TrivYeah\\": "trivyeah"
         },
         "classmap": [
-            "database/seeds",
-            "database/factories"
+            "system/database/seeds",
+            "system/database/factories"
         ]
     },
     "autoload-dev": {

@@ -13,5 +13,7 @@
 */
 
 Route::group(["prefix" => "forms"], function () {
-    Route::post("create", OrganizationController::class . "@create");
+    Route::post("create", function () {
+        return response()->json(["data" => "success"]);
+    });
 });

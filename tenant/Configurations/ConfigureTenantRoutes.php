@@ -33,7 +33,6 @@ class ConfigureTenantRoutes
      */
     protected function addWebRoutes(ConfigureRoutes $event)
     {
-        dd("got here");
         $event->fromFile(
             ['middleware' => ['web']],
             base_path('/tenant/routes/web.php')

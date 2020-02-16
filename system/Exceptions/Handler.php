@@ -3,7 +3,10 @@
 namespace System\Exceptions;
 
 use Exception;
+use TrivYeah\Support\ResponseHelper;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +49,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof NotFoundHttpException){
+            return ResponseHelper::fail("Can't find resource", Response::HTTP_NOT_FOUND);
+        }
         return parent::render($request, $exception);
     }
 }
