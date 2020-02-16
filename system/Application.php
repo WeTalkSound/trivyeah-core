@@ -18,6 +18,8 @@ class Application extends \Illuminate\Foundation\Application
      */
     public function databasePath($path = '')
     {
-        return ($this->databasePath ?: $this->path().DIRECTORY_SEPARATOR.'database').($path ? DIRECTORY_SEPARATOR.$path : $path);
+        return ($this->databasePath ?: 
+                $this->path().DIRECTORY_SEPARATOR.'database')
+                .($path ? DIRECTORY_SEPARATOR.$path : $path);
     }
 }
