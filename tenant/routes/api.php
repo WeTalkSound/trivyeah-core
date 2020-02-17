@@ -12,7 +12,7 @@
 |
 */
 
-Route::group(["prefix" => "forms"], function () {
+Route::group(["prefix" => "forms", "middleware" => "auth:tenant"], function () {
     Route::post("create", function () {
         return response()->json(["data" => "success"]);
     });

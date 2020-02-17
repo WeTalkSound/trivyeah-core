@@ -7,6 +7,13 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ResponseHelper
 {
+    /**
+     * Send a unified failure message.
+     * @param mixed $errors,
+     * @param int $code
+     * 
+     * @throws HttpResponseException
+     */
     public static function fail($errors, $code = Response::HTTP_UNPROCESSABLE_ENTITY) 
     {
         $errors = is_array($errors) ? $errors : [$errors];

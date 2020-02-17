@@ -2,7 +2,6 @@
 
 namespace System\Models\Traits;
 
-use System\Models\Hostname;
 use Illuminate\Http\Request;
 use Tenancy\Identification\Contracts\Tenant;
 

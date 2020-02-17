@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use System\Http\Controllers\Api\OrganizationController;
+use System\Http\Controllers\Api\AuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,9 @@ use System\Http\Controllers\Api\OrganizationController;
 |
 */
 
-Route::group(["prefix" => "organization"], function () {
+Route::post("create-user", AuthenticationController::class . "@create");
+Route::post("authenticate", AuthenticationController::class . "@authenticate");
+
+Route::group(["prefix" => "organization", "middleware" => "auth:system"], function () {
     Route::post("create", OrganizationController::class . "@create");
 });
