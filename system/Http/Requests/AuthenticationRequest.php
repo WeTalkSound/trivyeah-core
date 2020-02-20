@@ -2,10 +2,13 @@
 
 namespace System\Http\Requests;
 
+use TrivYeah\Traits\FailsValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AuthenticationRequest extends FormRequest
 {
+    use FailsValidation;
+    
     /**
      * Determine if the user is authorized to make this request.
      *

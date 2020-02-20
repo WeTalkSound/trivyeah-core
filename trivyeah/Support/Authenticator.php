@@ -59,7 +59,7 @@ class Authenticator
      * @param $userLoginDetails
      * @return array
      */
-    public function login(array $userLoginDetails): array
+    public function login(array $userLoginDetails)
     {
         if (! $token = auth($this->guard())
             ->attempt(Arr::only($userLoginDetails, ["email", "password"]))) {
