@@ -22,4 +22,14 @@ class Organization extends Model implements Tenant, IdentifiesByHttp
     {
         return $this->hasMany(Hostname::class);
     }
+
+    /**
+     * The actual value of the key for the tenant Model.
+     *
+     * @return string|int
+     */
+    public function getTenantKey()
+    {
+        return substr($this->getKey(), 0, 32);
+    }
 }

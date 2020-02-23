@@ -12,8 +12,8 @@
 |
 */
 
-Route::group(["prefix" => "forms", "middleware" => "auth:tenant"], function () {
+Route::group(["prefix" => "forms"], function () {
     Route::post("create", function () {
-        return response()->json(["data" => "success"]);
+        return Tenant\Models\Form::create(["title" => "test form", "slug" => "test-form"]);
     });
 });

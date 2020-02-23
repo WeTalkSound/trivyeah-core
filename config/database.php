@@ -93,11 +93,8 @@ return [
 
         'system' => [
             'driver' => 'mysql',
-            'host' => env('TENANCY_HOST', '127.0.0.1'),
-            'port' => env('TENANCY_PORT', '3306'),
-            'database' => env('TENANCY_DATABASE', 'tenancy'),
-            'username' => env('TENANCY_USERNAME', 'tenancy'),
-            'password' => env('TENANCY_PASSWORD', ''),
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',

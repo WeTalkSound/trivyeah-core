@@ -22,9 +22,7 @@ class ConfigureTenantHost
         $event->configuration["host"] = config(
             "database.connections.$defaultDatabaseConnection.host"
         );
-
-        $username = $event->configuration["username"];
         
-        $event->configuration["username"] = substr($username, 0, 32);
+        $event->configuration["username"] = $event->tenant->getTenantKey();
     }
 }

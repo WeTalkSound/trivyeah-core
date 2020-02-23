@@ -18,6 +18,6 @@ use System\Http\Controllers\Api\AuthenticationController;
 Route::post("create-user", AuthenticationController::class . "@create");
 Route::post("authenticate", AuthenticationController::class . "@authenticate");
 
-Route::group(["prefix" => "organization", "middleware" => "auth:system"], function () {
+Route::group(["prefix" => "organization"], function () {
     Route::post("create", OrganizationController::class . "@create");
 });

@@ -15,7 +15,7 @@ class TenantServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        include_once(base_path("tenant/helpers.php"));
     }
 
     /**
