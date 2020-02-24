@@ -51,6 +51,8 @@ class EventServiceProvider extends ServiceProvider
     {
         return [
             base_path('tenant/Configurations'),
+            app_path('Listeners'),
+            base_path('tenant/Listeners')
         ];
     }
 }

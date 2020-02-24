@@ -1,5 +1,7 @@
 <?php
 
+use Tenant\Http\Controllers\Api\AuthenticationController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +14,10 @@
 |
 */
 
-Route::group(["prefix" => "forms"], function () {
+Route::post("authenticate", AuthenticationController::class . "@authenticate");
+Route::post("create-user", AuthenticationController::class . "@create");
+
+Route::group(["prefix" => "forms", "middleware" => "auth:tenant"], function () {
     Route::post("create", function () {
         return Tenant\Models\Form::create(["title" => "test form", "slug" => "test-form"]);
     });

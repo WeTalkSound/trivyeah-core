@@ -5,6 +5,7 @@ namespace System\Services;
 use System\Models\User;
 use System\Models\Hostname;
 use System\Models\Organization;
+use System\Events\TenantCreated;
 use Illuminate\Support\Facades\DB;
 use Tenancy\Tenant\Events\Created;
 
@@ -33,21 +34,8 @@ class SystemService
             return $tenant;
         });
 
-        event(new Created($tenant));
+        event(new TenantCreated($tenant, $tenantInformation));
 
         return $tenant;
-    }
-
-    /**
-     * Create a system user
-     * @param array $userInformation
-     */
-    public function createUser(array $userInformation)
-    {
-        $user = new User;
-
-        $user->fill($userInformation)->save();
-
-        return $user;
     }
 }
