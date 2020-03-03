@@ -169,12 +169,15 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-
+        System\Providers\AppServiceProvider::class,
+        System\Providers\AuthServiceProvider::class,
+        // System\Providers\BroadcastServiceProvider::class,
+        System\Providers\EventServiceProvider::class,
+        System\Providers\RouteServiceProvider::class,
+        System\Providers\TenantServiceProvider::class,
+        Tenancy\Hooks\Database\Provider::class,
+        Tenancy\Hooks\Migration\Provider::class,
+        Tenancy\Database\Drivers\Mysql\Provider::class,
     ],
 
     /*

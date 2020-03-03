@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'system',
         'passwords' => 'users',
     ],
 
@@ -41,9 +41,15 @@ return [
             'provider' => 'users',
         ],
 
-        'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
+        'system' => [
+            'driver' => 'jwt',
+            'provider' => 'system_users',
+            'hash' => false,
+        ],
+
+        'tenant' => [
+            'driver' => 'jwt',
+            'provider' => 'tenant_users',
             'hash' => false,
         ],
     ],
@@ -71,10 +77,15 @@ return [
             'model' => App\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'system_users' => [
+            'driver' => 'eloquent',
+            'model' => System\Models\User::class,
+        ],
+
+        'tenant_users' => [
+            'driver' => 'eloquent',
+            'model' => Tenant\Models\User::class,
+        ],
     ],
 
     /*
