@@ -18,7 +18,6 @@ class CreateFormsTable extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

@@ -12,6 +12,7 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
         "laravel/tinker": "^2.0",
+        "spatie/laravel-sluggable": "^2.2",
         "tenancy/tenancy": "dev-master",
         "tymon/jwt-auth": "1.0.0-rc.5.1"
     },
@@ -40,7 +41,8 @@
         },
         "classmap": [
             "system/database/seeds",
-            "system/database/factories"
+            "system/database/factories",
+            "tenant/database/seeds"
         ]
     },
     "autoload-dev": {

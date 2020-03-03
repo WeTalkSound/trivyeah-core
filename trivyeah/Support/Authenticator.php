@@ -31,7 +31,7 @@ class Authenticator
      */
     public function guard()
     {
-        $this->environment->isIdentified() ? "tenant" : "system";
+        $this->environment->getTenant() ? "tenant" : "system";
     }
 
     /**

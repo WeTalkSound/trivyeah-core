@@ -3,6 +3,7 @@
 namespace TrivYeah\Support;
 
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ResponseHelper
@@ -24,5 +25,17 @@ class ResponseHelper
         );
 
         throw new HttpResponseException($jsonResponse);
+    }
+
+    /**
+     * Success response
+     */
+    public static function success($message)
+    {
+        return new JsonResource([
+            "data" => [
+                "message" => $message
+            ]
+        ]);
     }
 }

@@ -19,7 +19,6 @@ class CreateAnswersTable extends Migration
             $table->unsignedBigInteger('response_id');
             $table->longText('detail');
             $table->timestamps();
-            $table->softDeletes();
 
             $table->foreign('question_id')
             ->references('id')->on('questions')
