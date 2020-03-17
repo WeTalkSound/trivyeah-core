@@ -5,6 +5,9 @@ namespace System\Providers;
 use Tenancy\Environment;
 use System\Mixin\TenancyMixin;
 use System\Models\Organization;
+use Illuminate\Contracts\Http\Kernel;
+use TrivYeah\Providers\TenantProvider;
+use TrivYeah\Support\SettingsResolver;
 use Illuminate\Support\ServiceProvider;
 use Tenancy\Identification\Contracts\Tenant;
 use Tenancy\Affects\Connections\Events\Resolved;
@@ -23,6 +26,8 @@ class TenantServiceProvider extends ServiceProvider
         include_once(base_path("tenant/helpers.php"));
 
         Environment::mixin(new TenancyMixin);
+
+        $this->registerTenantSettings();
     }
 
     /**
@@ -37,5 +42,15 @@ class TenantServiceProvider extends ServiceProvider
             
             return $resolver;
         });
+
+        $this->app->register(TenantProvider::class);
+    }
+
+    /**
+     * Register Tenant Settings
+     */
+    public function registerTenantSettings()
+    {
+        $this->app->make(SettingsResolver::class)->resolve();
     }
 }

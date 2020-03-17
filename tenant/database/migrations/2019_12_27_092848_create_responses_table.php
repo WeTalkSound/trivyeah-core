@@ -18,7 +18,6 @@ class CreateResponsesTable extends Migration
             $table->unsignedBigInteger('form_id');
             $table->string('slug');
             $table->timestamps();
-            $table->softDeletes();
 
             $table->foreign('form_id')
             ->references('id')->on('forms')

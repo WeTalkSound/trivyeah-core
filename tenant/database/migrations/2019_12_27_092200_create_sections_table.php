@@ -18,7 +18,6 @@ class CreateSectionsTable extends Migration
             $table->unsignedBigInteger('form_id');
             $table->string('title')->nullable();
             $table->timestamps();
-            $table->softDeletes();
 
             $table->foreign('form_id')
             ->references('id')->on('forms')

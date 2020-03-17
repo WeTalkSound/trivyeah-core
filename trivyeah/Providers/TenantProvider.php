@@ -1,12 +1,12 @@
 <?php
 
-namespace System\Providers;
+namespace TrivYeah\Providers;
 
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class TenantProvider extends ServiceProvider
 {
     /**
      * Register any application services.
@@ -15,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->register(RouteEventProvider::class);
     }
 
     /**
@@ -25,15 +25,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Request::macro('dto', function () {
-            $data = $this->all();
-
-            foreach ($data as $key => $value) {
-                $dto[$this->mapToDb[$key] ?? $key] = $value;
-            }
-
-            return new Fluent($dto ?? []);
-        });
  
     }
 }

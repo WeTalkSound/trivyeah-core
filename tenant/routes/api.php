@@ -1,5 +1,7 @@
 <?php
 
+use TrivYeah\Support\RouteName as RN;
+use Tenant\Http\Controllers\Api\FormController;
 use Tenant\Http\Controllers\Api\AuthenticationController;
 
 
@@ -17,8 +19,10 @@ use Tenant\Http\Controllers\Api\AuthenticationController;
 Route::post("authenticate", AuthenticationController::class . "@authenticate");
 Route::post("create-user", AuthenticationController::class . "@create");
 
-Route::group(["prefix" => "forms", "middleware" => "auth:tenant"], function () {
-    Route::post("create", function () {
-        return Tenant\Models\Form::create(["title" => "test form", "slug" => "test-form"]);
-    });
+Route::group(["prefix" => "forms"], function () {
+    Route::post("create", FormController::class . "@createForm")->name(RN::CREATE_FORM);
+    Route::put("update", FormController::class . "@updateForm")->name(RN::UPDATE_FORM);
+    Route::get("list", FormController::class . "@listForms")->name(RN::LIST_FORMS);
+    Route::get("view", FormController::class . "@viewForm")->name(RN::VIEW_FORM);
+    Route::delete("delete", FormController::class . "@deleteForm")->name(RN::DELETE_FORM);
 });

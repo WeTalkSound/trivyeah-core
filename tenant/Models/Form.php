@@ -2,12 +2,14 @@
 
 namespace Tenant\Models;
 
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Form extends Model
 {
-    use SoftDeletes;
+    use HasSlug;
 
     /**
      * The attributes that are mass assignable.
@@ -40,5 +42,15 @@ class Form extends Model
     public function theme()
     {
         return $this->hasOne(Theme::class);
+    }
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug');
     }
 }

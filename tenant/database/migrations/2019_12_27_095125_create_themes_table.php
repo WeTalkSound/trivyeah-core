@@ -20,7 +20,6 @@ class CreateThemesTable extends Migration
             $table->string('accent')->nullbale();
             $table->longText('other_aesthetics')->nullable();
             $table->timestamps();
-            $table->softDeletes();
 
             $table->foreign('form_id')
             ->references('id')->on('forms')
