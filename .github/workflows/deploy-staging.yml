@@ -38,4 +38,4 @@ jobs:
       env:
         SSHPASS: ${{ secrets.PASSWORD }}
       run: |
-        sshpass -e ssh ubuntu@3.19.72.39 "cd /var/www/trivyeah-backend && composer install --no-interact"
+        sshpass -e ssh ubuntu@3.19.72.39 cd /var/www/trivyeah-backend && composer install --no-interact
