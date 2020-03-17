@@ -43,3 +43,4 @@ jobs:
         script: |
           cd /var/www/trivyeah-backend
           composer install --no-interaction
+          php artisan migrate
