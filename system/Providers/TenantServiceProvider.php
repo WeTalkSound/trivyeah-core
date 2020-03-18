@@ -51,6 +51,6 @@ class TenantServiceProvider extends ServiceProvider
      */
     public function registerTenantSettings()
     {
-//         $this->app->make(SettingsResolver::class)->resolve();
+        $this->app->make(SettingsResolver::class)->resolve();
     }
 }

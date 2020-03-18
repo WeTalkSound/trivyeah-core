@@ -17,11 +17,13 @@ class ConfigureTenantHost
      */
     public function handle(Creating $event)
     {
-        $defaultDatabaseConnection = config("database.default");
+        // $defaultDatabaseConnection = config("database.default");
 
-        $event->configuration["host"] = config(
-            "database.connections.$defaultDatabaseConnection.host"
-        );
+        // $event->configuration["host"] = config(
+        //     "database.connections.$defaultDatabaseConnection.host"
+        // );
+
+        $event->configuration["host"] = "%";
         
         $event->configuration["username"] = $event->tenant->getTenantKey();
     }
