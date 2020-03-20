@@ -18,9 +18,14 @@ trait Enumable
         return $reflectionClass->getConstants();
     }
 
-    public static function enumsToString()
+    public function __toString()
     {
         return implode("," , static::enums());
+    }
+
+    public static function new()
+    {
+        return new static;
     }
 
     public static function enumsExcept()

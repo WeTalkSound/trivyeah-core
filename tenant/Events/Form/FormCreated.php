@@ -3,7 +3,7 @@
 namespace Tenant\Events\Form;
 
 use Tenant\Models\Form;
-use TrivYeah\Traits\Actable;
+use TrivYeah\Support\Fluent;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -18,13 +18,16 @@ class FormCreated
 
     public $form;
 
+    public $dto;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Form $form)
+    public function __construct(Form $form, Fluent $dto)
     {
         $this->form = $form;
+        $this->dto = $dto;
     }
 }

@@ -3,6 +3,9 @@
 namespace System\Providers;
 
 use Illuminate\Support\Fluent;
+use System\Mixin\RequestMixin;
+use System\Mixin\CollectionMixin;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        include_once(app_path("helpers.php"));
     }
 
     /**
@@ -25,15 +28,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Request::macro('dto', function () {
-            $data = $this->all();
-
-            foreach ($data as $key => $value) {
-                $dto[$this->mapToDb[$key] ?? $key] = $value;
-            }
-
-            return new Fluent($dto ?? []);
-        });
+        Request::mixin(new RequestMixin);
+        Collection::mixin(new CollectionMixin);
  
     }
 }

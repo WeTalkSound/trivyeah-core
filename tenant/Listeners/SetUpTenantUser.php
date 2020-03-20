@@ -34,8 +34,8 @@ class SetUpTenantUser
     {
         Tenancy::runWithin($event->tenant, function () use ($event) {
             $userInformation = $event->tenantUserInformation;
-            $userInformation["name"] = $userInformation["user_name"];
-            $userInformation["email"] = $userInformation["user_email"];
+            $userInformation->name = $userInformation->user_name;
+            $userInformation->email = $userInformation->user_email;
 
             $this->service->createUser($userInformation);
         });

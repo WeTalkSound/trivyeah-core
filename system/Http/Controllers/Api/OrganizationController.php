@@ -12,7 +12,7 @@ class OrganizationController extends Controller
 {
     public function create(OrganizationRequest $request, SystemService $service)
     {
-        $tenant = $service->createTenant($request->validated());
+        $tenant = $service->createTenant($request->dto());
 
         return new OrganizationResource($tenant);
     }

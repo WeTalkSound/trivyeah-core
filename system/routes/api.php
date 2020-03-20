@@ -15,6 +15,10 @@ use System\Http\Controllers\Api\AuthenticationController;
 |
 */
 
+Route::any("health-check", function () {
+    return System\Models\Organization::first();
+});
+
 Route::post("create-user", AuthenticationController::class . "@create");
 Route::post("authenticate", AuthenticationController::class . "@authenticate");
 

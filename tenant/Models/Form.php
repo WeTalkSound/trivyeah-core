@@ -17,7 +17,7 @@ class Form extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'slug'
+        'title', 'slug', 'published_at'
     ];
 
     /**
