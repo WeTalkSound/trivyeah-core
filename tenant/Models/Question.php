@@ -18,7 +18,7 @@ class Question extends Model implements Sortable
      * @var array
      */
     protected $fillable = [
-        'section_id', 'type', 'options', 'value', 'order', 'text'
+        'section_id', 'type', 'order', 'text'
     ];
 
     public $sortable = [
@@ -27,7 +27,8 @@ class Question extends Model implements Sortable
     ];
 
     protected $casts = [
-        "meta" => "array"
+        "meta" => "array",
+        "text" => "array",
     ];
 
     /**
@@ -41,8 +42,13 @@ class Question extends Model implements Sortable
     public function meta()
     {
         return [
-            "options" => null,
+            "options" => [],
             "value" => null
         ];
+    }
+
+    public function buildSortQuery()
+    {
+        return static::query()->where('section_id', $this->section_id);
     }
 }

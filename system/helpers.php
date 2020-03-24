@@ -28,18 +28,18 @@ if (! function_exists("fluent")) {
     }
 }
 
-if (! function_exists("reshape")) {
+if (! function_exists("array_shape")) {
     /**
      * Transform an array to a fluent or collection class
      * @param array $attributes
      * 
      * @return \TrivYeah\Support\Fluent
      */
-    function reshape($convertables = null, $accessor = []) {
+    function array_shape($convertables = null, $accessor = []) {
         if (is_array($convertables)) {
 
             foreach($convertables as $key => $value) {
-                $dto[$accessor[$key] ?? $key] = reshape($value);
+                $dto[$accessor[$key] ?? $key] = array_shape($value);
             }
             $dto = $dto ?? [];
             return is_array_assoc($dto) ? fluent($dto) : collect($dto);
@@ -48,21 +48,25 @@ if (! function_exists("reshape")) {
     }
 }
 
-if (! function_exists("unshape")) {
+if (! function_exists("array_unshape")) {
     /**
      * Transform a fluent or collection class to an array
      * @param array $attributes
      * 
      * @return \TrivYeah\Support\Fluent
      */
-    function unshape($convertables = null, $accessor = []) {
-        if  ($convertables instanceOf ArrayAccess) {
-
-            foreach ($convertables->toArray() as $key => $value) {
-                $dto[$key] = unshape($value);
-            }
-            return $dto ?? [];
+    function array_unshape($convertables = null) {
+        if  (!$convertables instanceOf ArrayAccess && !is_array($convertables)) {
+           return $convertables;
         }
-        return $convertables;
+        
+        if ($convertables instanceOf ArrayAccess) {
+            $convertables = $convertables->toArray();
+        }
+
+        foreach ($convertables as $key => $value) {
+            $dto[$key] = array_unshape($value);
+        }
+        return $dto ?? [];
     }
 }

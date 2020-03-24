@@ -15,4 +15,9 @@ class Fluent extends Base
     {
         return $this->get($attribute, fluent());
     }
+
+    public function has($attribute)
+    {
+        return (bool) $this->get($attribute);
+    }
 }

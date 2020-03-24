@@ -1,10 +1,9 @@
 <?php
 
-namespace Tenant\Events\Form;
+namespace Tenant\Events\Section;
 
-use Tenant\Models\Form;
+use Tenant\Models\Section;
 use TrivYeah\Support\Fluent;
-use TrivYeah\Traits\Actable;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -13,11 +12,11 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class FormUpdated
+class SectionUpdated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $form;
+    public $section;
 
     public $dto;
 
@@ -26,9 +25,9 @@ class FormUpdated
      *
      * @return void
      */
-    public function __construct(Form $form, Fluent $dto)
+    public function __construct(Section $section, Fluent $dto)
     {
-        $this->form = $form;
+        $this->section = $section;
         $this->dto = $dto;
     }
 }

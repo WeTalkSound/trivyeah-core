@@ -23,6 +23,18 @@ trait HasMeta
             return static::unpackMeta($model);
         });
     }
+
+    protected function initializeHasMeta()
+    {
+        $this->fillable(
+            array_merge($this->fillable , $this->getMetaAttributes())
+        );
+    }
+
+    protected function getMetaAttributes()
+    {
+        return array_keys($this->meta());
+    }
     
     public function meta()
     {
@@ -45,7 +57,7 @@ trait HasMeta
             $model->offsetUnset($meta);
         }
 
-        $model->{static::$meta_field} = unshape($metas);
+        $model->{static::$meta_field} = array_unshape($metas);
     }
 
     protected static function unpackMeta($model)
@@ -54,7 +66,7 @@ trait HasMeta
         $model->offsetUnset(static::$meta_field);
 
         foreach ($metas as $meta => $value) {
-            $model->$meta = reshape($value);
+            $model->$meta = array_shape($value);
         }
     }
 }

@@ -100,7 +100,8 @@ class ExistsWith
      * 
      * @return array
      */
-    public function customMessages($attribute){
+    public function customMessages($attribute)
+    {
         return [
             $this->name => "Can't retrive {$attribute} details"
         ];

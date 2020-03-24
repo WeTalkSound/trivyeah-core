@@ -6,11 +6,11 @@ use Tenancy\Facades\Tenancy;
 use System\Events\TenantCreated;
 use Tenant\Services\FormService;
 use Tenant\Services\TenantService;
-use Tenant\Events\Form\FormCreated;
 use Illuminate\Queue\InteractsWithQueue;
+use Tenant\Events\Section\SectionUpdated;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class HandleSectionsOnFormCreated
+class HandleQuestionOnSectionUpdated
 {
     /**
      * @var FormSerivce
@@ -32,12 +32,10 @@ class HandleSectionsOnFormCreated
      * @param  object  $event
      * @return void
      */
-    public function handle(FormCreated $event)
+    public function handle(SectionUpdated $event)
     {
-        $event->dto->getOrCollect("sections")->map(function($sectionDto) use ($event) {
-            $sectionDto->form = $event->form;
-            
-            $this->service->createSection($sectionDto);
-        });
+        $questions = $event->dto->getOrCollect("questions");
+
+        $this->service->handleQuestions($questions, $event->section);
     }
 }

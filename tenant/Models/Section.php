@@ -36,4 +36,9 @@ class Section extends Model implements Sortable
     {
         return $this->hasMany(Question::class);
     }
+
+    public function buildSortQuery()
+    {
+        return static::query()->where('form_id', $this->form_id);
+    }
 }
