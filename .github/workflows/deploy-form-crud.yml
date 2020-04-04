@@ -30,10 +30,12 @@ jobs:
       env:
         PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
+        KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
       run: |
         mkdir -p ~/.ssh
         echo $PRIVATE_KEY >> ~/.ssh/deployerkey
         echo $PUBLIC_KEY >> ~/.ssh/deployerkey.pub
+        echo $KNOWN_HOSTS >> ~/.ssh/known_hosts
         sudo chmod 644 ~/.ssh/deployerkey.pub
         sudo chmod 600 ~/.ssh/deployerkey
     
