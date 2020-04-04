@@ -15,7 +15,8 @@
         "spatie/eloquent-sortable": "^3.8",
         "spatie/laravel-sluggable": "^2.2",
         "tenancy/tenancy": "dev-master",
-        "tymon/jwt-auth": "1.0.0-rc.5.1"
+        "tymon/jwt-auth": "1.0.0-rc.5.1",
+        "lorisleiva/laravel-deployer": "^0.2.11"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
@@ -24,6 +25,12 @@
         "nunomaduro/collision": "^3.0",
         "phpunit/phpunit": "^8.0"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/WeTalkSound/tenancy"
+        }
+    ],
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
