@@ -29,13 +29,10 @@ jobs:
     - name: Run Deploy
       env:
         PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-        PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
       run: |
         mkdir -p ~/.ssh && chmod 700 ~/.ssh
         echo "$PRIVATE_KEY" | tr -d '\r' >> ~/.ssh/deployerkey
-        echo "$PUBLIC_KEY" >> ~/.ssh/deployerkey.pub
         echo "StrictHostKeyChecking no" >> ~/.ssh/config
-        sudo chmod 644 ~/.ssh/deployerkey.pub
         sudo chmod 600 ~/.ssh/deployerkey
         sudo chmod 600 ~/.ssh/config
         composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
