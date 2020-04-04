@@ -31,6 +31,7 @@ jobs:
         PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
       run: |
+        mkdir -p ~/.ssh
         echo $PRIVATE_KEY >> ~/.ssh/deployerkey
         echo $PUBLIC_KEY >> ~/.ssh/deployerkey.pub
         sudo chmod 644 ~/.ssh/deployerkey.pub
