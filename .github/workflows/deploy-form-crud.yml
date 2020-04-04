@@ -38,4 +38,6 @@ jobs:
         sudo chmod 600 ~/.ssh/deployerkey
     
     - name: Run Deploy
-      run: php artisan deploy
+      run: |
+        composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+        php artisan deploy
