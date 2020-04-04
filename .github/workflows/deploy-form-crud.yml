@@ -18,6 +18,8 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Prepare To Deploy
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
     - name: Install Deployer
       run: |
         curl -LO https://deployer.org/deployer.phar
@@ -35,6 +37,4 @@ jobs:
         sudo chmod 600 ~/.ssh/deployerkey
     
     - name: Run Deploy
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
       run: php artisan deploy
