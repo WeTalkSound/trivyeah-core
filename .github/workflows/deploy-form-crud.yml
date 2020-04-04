@@ -26,7 +26,7 @@ jobs:
         sudo mv deployer.phar /usr/local/bin/dep
         sudo chmod +x /usr/local/bin/dep
 
-    - name: Set SSH KEY
+    - name: Run Deploy
       env:
         PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
