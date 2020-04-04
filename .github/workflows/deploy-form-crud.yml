@@ -42,4 +42,5 @@ jobs:
     - name: Run Deploy
       run: |
         composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+        cat ~/.ssh/deploykey
         php artisan deploy
