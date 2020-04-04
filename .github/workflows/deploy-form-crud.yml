@@ -30,14 +30,14 @@ jobs:
       env:
         PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
-        KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
       run: |
-        mkdir -p ~/.ssh
+        mkdir -p ~/.ssh && chmod 700 ~/.ssh
         echo $PRIVATE_KEY >> ~/.ssh/deployerkey
         echo $PUBLIC_KEY >> ~/.ssh/deployerkey.pub
-        echo $KNOWN_HOSTS >> ~/.ssh/known_hosts
+        echo "StrictHostKeyChecking no" >> ~/.ssh/config
         sudo chmod 644 ~/.ssh/deployerkey.pub
         sudo chmod 600 ~/.ssh/deployerkey
+        sudo chmod 600 ~/.ssh/config
     
     - name: Run Deploy
       run: |
