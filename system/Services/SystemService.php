@@ -9,6 +9,7 @@ use System\Models\Organization;
 use System\Events\TenantCreated;
 use Illuminate\Support\Facades\DB;
 use Tenancy\Tenant\Events\Created;
+use TrivYeah\Support\ResponseHelper;
 
 class SystemService
 {
@@ -38,5 +39,17 @@ class SystemService
         event(new TenantCreated($tenant, $tenantDto));
 
         return $tenant;
+    }
+
+    public function bootstrapTenant(Fluent $dto)
+    {
+        $organization = Organization::whereHas("hostNames", function ($hostname) use ($dto) {
+            return $hostname->where("fqdn", $dto->fqdn);
+        })->first();
+
+        return $organization == null ?
+            ResponseHelper::fail(
+                "organization not found with hostname"
+            ) : $organization;
     }
 }

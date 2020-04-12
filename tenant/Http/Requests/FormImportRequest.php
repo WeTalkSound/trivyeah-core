@@ -1,11 +1,11 @@
 <?php
 
-namespace System\Http\Requests;
+namespace Tenant\Http\Requests;
 
 use TrivYeah\Traits\FailsValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
-class OrganizationRequest extends FormRequest
+class FormImportRequest extends FormRequest
 {
     use FailsValidation;
     
@@ -27,12 +27,9 @@ class OrganizationRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => "required|string",
-            "fqdn" => "required|string|unique:hostnames",
-            "email" => "required|string|email",
-            "user_name" => "required|string",
-            "user_email" => "required|string",
-            "password" => "required|confirmed"
+            "file" => "required|string",
+            "lang" => "required|string",
+            "title" => "required|string"
         ];
     }
 }

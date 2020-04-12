@@ -16,7 +16,7 @@ class CreateHostnamesTable extends Migration
         Schema::create('hostnames', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('fqdn');
-            $table->string('protocol');
+            $table->string('protocol')->nullable();
             $table->uuid('organization_id');
             $table->timestamps();
 

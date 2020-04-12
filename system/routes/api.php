@@ -24,4 +24,5 @@ Route::post("authenticate", AuthenticationController::class . "@authenticate");
 
 Route::group(["prefix" => "organization"], function () {
     Route::post("create", OrganizationController::class . "@create");
+    Route::post("bootstrap", OrganizationController::class . "@bootstrap");
 });
