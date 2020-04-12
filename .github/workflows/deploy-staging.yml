@@ -41,3 +41,4 @@ jobs:
           cd /var/www/trivyeah-backend
           composer install --no-interaction
           php artisan migrate
+          sudo chmod 777 -R storage/

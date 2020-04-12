@@ -16,7 +16,7 @@ class UserValidator extends ResourceValidator
     public function isEmailUnique()
     {
         $validator = Validator::make(
-            ["email" => "unique:users"], $this->dto->toArray()
+            $this->dto->toArray(), ["email" => "unique:users"]
         );
 
         !$validator->fails() ?: $this->errors->push("email is already taken");
