@@ -8,6 +8,7 @@ use TrivYeah\Support\ResponseHelper;
 use Tenant\Http\Requests\FormRequest;
 use Tenant\Http\Controllers\Controller;
 use Tenant\Http\Resources\FormResource;
+use Tenant\Http\Requests\FormImportRequest;
 
 class FormController extends Controller
 {
@@ -44,5 +45,12 @@ class FormController extends Controller
         $service->deleteForm($request->dto());
 
         return ResponseHelper::success("Form Deleted Successfully");
+    }
+
+    public function import(FormImportRequest $request, FormService $service)
+    {
+        $service->import($request->dto());
+
+        return ResponseHelper::success("Form import queued successfully");
     }
 }

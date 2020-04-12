@@ -16,4 +16,11 @@ class OrganizationController extends Controller
 
         return new OrganizationResource($tenant);
     }
+
+    public function bootstrap(Request $request, SystemService $service)
+    {
+        $tenant = $service->bootstrapTenant($request->dto());
+
+        return new OrganizationResource($tenant);
+    }
 }
