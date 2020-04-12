@@ -16,6 +16,7 @@ class TenantProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteEventProvider::class);
+        $this->app->register(CustomValidatorProvider::class);
     }
 
     /**

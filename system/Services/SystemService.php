@@ -4,6 +4,7 @@ namespace System\Services;
 
 use System\Models\User;
 use System\Models\Hostname;
+use TrivYeah\Support\Fluent;
 use System\Models\Organization;
 use System\Events\TenantCreated;
 use Illuminate\Support\Facades\DB;
@@ -14,27 +15,27 @@ class SystemService
 
     /**
      * Create a new Tenant
-     * @param array
+     * @param TrivYeah\Support\Fluent
      * 
      * @return Tenancy\Identification\Contracts\Tenant
      */
-    public function createTenant(array $tenantInformation)
+    public function createTenant(Fluent $tenantDto)
     {
-        $tenant = DB::transaction(function () use ($tenantInformation) {
+        $tenant = DB::transaction(function () use ($tenantDto) {
             $tenant = Organization::firstOrCreate(
-                (new Organization($tenantInformation))->toArray()
+                (new Organization($tenantDto->toArray()))->toArray()
             );
     
             Hostname::firstOrCreate([
                 "organization_id" => $tenant->id,
-                "fqdn" => $tenantInformation["fqdn"]], 
-                (new Hostname($tenantInformation))->toArray()
+                "fqdn" => $tenantDto->fqdn], 
+                (new Hostname($tenantDto->toArray()))->toArray()
             );
 
             return $tenant;
         });
 
-        event(new TenantCreated($tenant, $tenantInformation));
+        event(new TenantCreated($tenant, $tenantDto));
 
         return $tenant;
     }

@@ -24,3 +24,13 @@ if (! function_exists("tenant_config")) {
         return $default;
     }
 }
+
+if (! function_exists("tenant_migration_path")) {
+
+    function tenant_migration_path($path = '') {
+        $basePath = "database" . DIRECTORY_SEPARATOR .  "migrations";
+        $path = $path ? $basePath . DIRECTORY_SEPARATOR . $path : $basePath;
+        
+        return tenant_path($path);
+    }
+}

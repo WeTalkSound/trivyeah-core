@@ -17,6 +17,7 @@ class CreateSectionsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('form_id');
             $table->string('title')->nullable();
+            $table->integer('order');
             $table->timestamps();
 
             $table->foreign('form_id')

@@ -17,6 +17,7 @@ class CreateResponsesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('form_id');
             $table->string('slug');
+            $table->string('user_identifier');
             $table->timestamps();
 
             $table->foreign('form_id')

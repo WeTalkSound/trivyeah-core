@@ -16,8 +16,13 @@ use Tenant\Http\Controllers\Api\AuthenticationController;
 |
 */
 
+Route::any("health-check", function () {
+    return Tenant\Models\Setting::first();
+});
+
 Route::post("authenticate", AuthenticationController::class . "@authenticate");
 Route::post("create-user", AuthenticationController::class . "@create");
+
 
 Route::group(["prefix" => "forms"], function () {
     Route::post("create", FormController::class . "@createForm")->name(RN::CREATE_FORM);

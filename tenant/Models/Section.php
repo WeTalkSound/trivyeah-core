@@ -2,18 +2,26 @@
 
 namespace Tenant\Models;
 
+use Spatie\EloquentSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\EloquentSortable\SortableTrait;
 
-class Section extends Model
+class Section extends Model implements Sortable
 {
+    use SortableTrait;
+    
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'title', 'form_id'
+        'title', 'form_id', 'order'
+    ];
+
+    public $sortable = [
+        'order_column_name' => 'order',
+        'sort_when_creating' => true,
     ];
 
     /**
@@ -22,5 +30,15 @@ class Section extends Model
     public function form()
     {
         return $this->belongsTo(Form::class);
+    }
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
+
+    public function buildSortQuery()
+    {
+        return static::query()->where('form_id', $this->form_id);
     }
 }

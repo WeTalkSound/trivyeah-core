@@ -12,6 +12,7 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
         "laravel/tinker": "^2.0",
+        "spatie/eloquent-sortable": "^3.8",
         "spatie/laravel-sluggable": "^2.2",
         "tenancy/tenancy": "dev-master",
         "tymon/jwt-auth": "1.0.0-rc.5.1"

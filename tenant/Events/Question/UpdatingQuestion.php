@@ -1,8 +1,7 @@
 <?php
 
-namespace Tenant\Events\Form;
+namespace Tenant\Events\Question;
 
-use Tenant\Models\Form;
 use TrivYeah\Support\Fluent;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
@@ -12,19 +11,19 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class CreatingForm
+class UpdatingQuestion
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $formDto;
+    public $questionDto;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Fluent $formDto)
+    public function __construct(Fluent $questionDto)
     {
-        $this->formDto = $formDto;
+        $this->questionDto = $questionDto;
     }
 }

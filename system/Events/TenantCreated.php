@@ -2,6 +2,7 @@
 
 namespace System\Events;
 
+use TrivYeah\Support\Fluent;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -24,7 +25,7 @@ class TenantCreated
      *
      * @return void
      */
-    public function __construct(Tenant $tenant, array $tenantUserInformation)
+    public function __construct(Tenant $tenant, Fluent $tenantUserInformation)
     {
         $this->tenant = $tenant;
         $this->tenantUserInformation = $tenantUserInformation;

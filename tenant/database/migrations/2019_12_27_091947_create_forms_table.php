@@ -17,6 +17,8 @@ class CreateFormsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('slug')->unique();
+            $table->dateTime('published_at')->nullable();
+            
             $table->timestamps();
         });
     }

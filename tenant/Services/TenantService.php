@@ -3,6 +3,8 @@
 namespace Tenant\Services;
 
 use Tenant\Models\User;
+use TrivYeah\Support\Fluent;
+use Tenant\ResourceValidators\UserValidator;
 
 class TenantService
 {
@@ -10,12 +12,12 @@ class TenantService
      * Create a tenant user
      * @param array $userInformation
      */
-    public function createUser(array $userInformation)
+    public function createUser(Fluent $userInformation)
     {
-        $user = new User;
+        UserValidator::make($userInformation)->validateAndFail();
 
-        $user->fill($userInformation)->save();
-
-        return $user;
+        return tap(User::make($userInformation->toArray()),function ($user) {
+            return $user->save();
+        });
     }
 }

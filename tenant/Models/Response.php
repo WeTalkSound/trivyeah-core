@@ -13,7 +13,7 @@ class Response extends Model
      * @var array
      */
     protected $fillable = [
-        'slug', 'form_id'
+        'slug', 'form_id', 'user_identifier'
     ];
 
     /**
