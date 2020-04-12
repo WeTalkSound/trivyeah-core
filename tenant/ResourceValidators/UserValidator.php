@@ -2,6 +2,8 @@
 
 namespace Tenant\ResourceValidators;
 
+use Illuminate\Support\Facades\Validator;
+
 class UserValidator extends ResourceValidator
 {
     public function validate(): self
