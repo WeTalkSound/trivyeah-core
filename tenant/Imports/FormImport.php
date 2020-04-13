@@ -6,12 +6,13 @@ use Tenant\Models\Form;
 use Tenant\Services\FormService;
 use Illuminate\Support\Collection;
 use Tenant\Enums\QuestionTypeEnum;
+use TrivYeah\Support\ResponseHelper;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class FormImport implements ToCollection, WithChunkReading, WithHeadingRow, WithValidation
+class FormImport implements ToCollection, WithChunkReading, WithHeadingRow
 {
     protected $language;
 
@@ -23,6 +24,8 @@ class FormImport implements ToCollection, WithChunkReading, WithHeadingRow, With
 
     protected $questions = [];
 
+    protected $errors = [];
+
     public function __construct(string $language, int $formId)
     {
         $this->language = $language;
@@ -30,17 +33,13 @@ class FormImport implements ToCollection, WithChunkReading, WithHeadingRow, With
         $this->service = app(FormService::class);
     }
 
-    public function rules(): array
-    {
-        return [
-            'type' => 'in:' . (string)QuestionTypeEnum::new(),
-            'value' => 'required_with:option|integer|min:0'
-        ];
-    }
-
     public function collection(Collection $rows)
     {
-       $this->handleSections(
+        $this->validateRow($rows);
+
+        if (! empty($this->errors)) ResponseHelper::fail($this->errors);
+        
+        $this->handleSections(
            $rows->pluck("section")->filter()->unique()
         );
 
@@ -86,10 +85,10 @@ class FormImport implements ToCollection, WithChunkReading, WithHeadingRow, With
             "section" => $this->sections[$row->get("section")],
             "type" => QuestionTypeEnum::MULTIPLE_CHOICE,
             "text" => [["lang" => $this->language, "lang_text" => $row->get("question")]],
-            "options" => [
+            "options" => [[
                 "text" => [["lang" => $this->language, "lang_text" => $option]], 
                 "value" => $row->get("value")
-            ]
+            ]]
         ]);
 
         $this->questions[] = $question;
@@ -112,5 +111,22 @@ class FormImport implements ToCollection, WithChunkReading, WithHeadingRow, With
         foreach ($this->questions as $question) {
             $this->service->createQuestion($question);
         }
+    }
+
+    protected function validateRow($rows)
+    {
+        $rows->map(function ($row, $index) {
+            $rowNumber = $index + 2;
+
+            if ($row->get("question") && !in_array(
+                $row->get("type"), QuestionTypeEnum::enums())
+            ) {
+                $this->errors[] = "Type field is required on line $rowNumber and should be: " . (string)QuestionTypeEnum::new();
+            }
+
+            if ($row->get("option") && ($row->get("value") === null || $row->get("value") < 0)) {
+                $this->errors[] = "Value field is required on line $rowNumber and should not be less than zero";
+            }
+        });
     }
 }

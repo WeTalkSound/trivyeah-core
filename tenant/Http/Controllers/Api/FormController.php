@@ -26,7 +26,7 @@ class FormController extends Controller
         return FormResource::collection($forms);
     }
 
-    public function viewForm(FormRequest $request, FormService $service)
+    public function viewForm(Request $request, FormService $service)
     {
         $form = $service->viewForm($request->dto());
 

@@ -12,11 +12,15 @@ class FileService
 
         $decodedFile = base64_decode($base64);
         $file = uniqid("file_") . "." . $mime;
-        $file = "test.csv";
         $filePath = storage_path($file);
 
         file_put_contents($filePath, $decodedFile);
 
         return $filePath;
+    }
+
+    public function unlinkFile($filePath)
+    {
+        if (file_exists($filePath)) unlink($filePath);
     }
 }

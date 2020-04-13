@@ -12,7 +12,11 @@ class RequestMixin
     public function dto()
     {
         return function () {
-            return array_shape($this->all(), $this->mapToDb);
+            $load = array_merge(
+                $this->all(), 
+                $this->route()->parameters()
+            );
+            return array_shape($load, $this->mapToDb);
         };
     }
 
@@ -23,7 +27,11 @@ class RequestMixin
     public function dtoFromValidated()
     {
         return function () {
-            return array_shape($this->validated(), $this->mapToDb);
+            $load = array_merge(
+                $this->validated(), 
+                $this->route()->parameters()
+            );
+            return array_shape($load, $this->mapToDb);
         };
     }
 }
