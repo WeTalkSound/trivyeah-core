@@ -28,7 +28,7 @@ Route::group(["prefix" => "forms"], function () {
     Route::post("create", FormController::class . "@createForm")->name(RN::CREATE_FORM);
     Route::put("update", FormController::class . "@updateForm")->name(RN::UPDATE_FORM);
     Route::get("list", FormController::class . "@listForms")->name(RN::LIST_FORMS);
-    Route::get("view", FormController::class . "@viewForm")->name(RN::VIEW_FORM);
+    Route::get("view/{slug?}", FormController::class . "@viewForm")->name(RN::VIEW_FORM);
     Route::delete("delete", FormController::class . "@deleteForm")->name(RN::DELETE_FORM);
     Route::post("import", FormController::class . "@import")->name(RN::IMPORT_FORM);
 });

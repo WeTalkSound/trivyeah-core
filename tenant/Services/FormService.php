@@ -161,7 +161,9 @@ class FormService
      */
     public function viewForm(Fluent $formDto)
     {
-        return Form::find($formDto->id);
+        ($form = Form::find($formDto->id)) || ($form = Form::whereSlug($formDto->slug)->first());
+
+        return $form ?: Response::fail("form could not be retrieved");
     }
 
      /**
@@ -218,6 +220,15 @@ class FormService
         $fileService = new FileService;
         $importPath = $fileService->createFileFromBase64($dto->file, "csv");
 
-        Excel::import(new FormImport($dto->lang, $form->id), $importPath);
+        try {
+            Excel::import(new FormImport($dto->lang, $form->id), $importPath);
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            $fileService->unlinkFile($importPath);
+            
+        }
+
+
     }
 }
