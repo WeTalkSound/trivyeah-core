@@ -32,4 +32,14 @@ class Organization extends Model implements Tenant, IdentifiesByHttp
     {
         return substr($this->getKey(), 0, 32);
     }
+
+    public function baseUrl()
+    {
+        $host = $this->hostNames()->base()->first();
+
+        $url =  $host->protocol ?? "http";
+        $url .= "://" . $host->fqdn;
+
+        return $url;
+    }
 }

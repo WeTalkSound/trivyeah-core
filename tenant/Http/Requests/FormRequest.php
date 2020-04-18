@@ -35,8 +35,10 @@ class FormRequest extends BaseFormRequest
                 ];
             case "POST":
                 return [
+                    "parent_id" => "nullable|exists:forms,id",
                     "title" => "required|string",
-                    "slug" => "nullable|string|unique:forms"
+                    "slug" => "nullable|string|unique:forms",
+                    "lang" => "required_with:parent_id"
                 ];
             case "PUT":
                 return [
@@ -49,13 +51,9 @@ class FormRequest extends BaseFormRequest
                     "sections.*.questions" => "required|array",
                     "sections.*.questions.*.id" => "integer|exists:questions,id",
                     "sections.*.questions.*.type" => "required|in:" . (string)QuestionTypeEnum::new(),
-                    "sections.*.questions.*.text" => "required|array",
-                    "sections.*.questions.*.text.*.lang" => "required|string",
-                    "sections.*.questions.*.text.*.lang_text" => "required|string",
+                    "sections.*.questions.*.text" => "required|string",
                     "sections.*.questions.*.options" => "nullable|required_if:sections.*.questions.*.type," . QuestionTypeEnum::MULTIPLE_CHOICE ."|array",
-                    "sections.*.questions.*.options.*.text" => "required|array",
-                    "sections.*.questions.*.options.*.text.*.lang" => "required|string",
-                    "sections.*.questions.*.options.*.text.*.lang_text" => "required|string",
+                    "sections.*.questions.*.options.*.text" => "required|string",
                     "sections.*.questions.*.options.*.value" => "required|integer",
                     "sections.*.questions.*.value" => "nullable|required_if:sections.*.questions.*.type," . QuestionTypeEnum::PLAIN_TEXT . "|integer",
                 ];
@@ -65,18 +63,15 @@ class FormRequest extends BaseFormRequest
     public function attributes()
     {
         return [
+            "id" => "Form Id",
             "sections.*.id" => "section id",
             "sections.*.questions" => "section questions",
             "sections.*.title" => "section title",
             "sections.*.questions.*.id" => "question id",
             "sections.*.questions.*.type" => "question type",
             "sections.*.questions.*.text" => "question text",
-            "sections.*.questions.*.text.*.lang" => "question lang",
-            "sections.*.questions.*.text.*.lang_text" => "question lang text",
             "sections.*.questions.*.options" => "options",
             "sections.*.questions.*.options.*.text" => "options text",
-            "sections.*.questions.*.options.*.text.*.lang" => "options lang",
-            "sections.*.questions.*.options.*.text.*.lang_text" => "options lang text",
             "sections.*.questions.*.value" => "question value"
         ];
     }

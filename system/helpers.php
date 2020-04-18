@@ -42,7 +42,7 @@ if (! function_exists("array_shape")) {
                 $dto[$accessor[$key] ?? $key] = array_shape($value);
             }
             $dto = $dto ?? [];
-            return is_array_assoc($dto) ? fluent($dto) : collect($dto);
+            return is_array_assoc($dto) || empty($dto) ? fluent($dto) : collect($dto);
         }
         return $convertables;
     }

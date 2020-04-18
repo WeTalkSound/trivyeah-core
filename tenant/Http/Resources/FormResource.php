@@ -18,7 +18,8 @@ class FormResource extends JsonResource
             "id" => $this->id,
             "title" => $this->title,
             "slug" => $this->slug,
-            "sections" => SectionResource::collection($this->sections)
+            "sections" => SectionResource::collection($this->sections),
+            "languages" => static::collection($this->languages)
         ];
     }
 }

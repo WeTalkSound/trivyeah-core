@@ -18,6 +18,7 @@ class CreateHostnamesTable extends Migration
             $table->string('fqdn');
             $table->string('protocol')->nullable();
             $table->uuid('organization_id');
+            $table->boolean("is_base")->default(false);
             $table->timestamps();
 
             $table->foreign('organization_id')

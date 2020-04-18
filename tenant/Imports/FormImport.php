@@ -14,8 +14,6 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 
 class FormImport implements ToCollection, WithChunkReading, WithHeadingRow
 {
-    protected $language;
-
     protected $form;
 
     protected $service;
@@ -26,10 +24,9 @@ class FormImport implements ToCollection, WithChunkReading, WithHeadingRow
 
     protected $errors = [];
 
-    public function __construct(string $language, int $formId)
+    public function __construct(Form $form)
     {
-        $this->language = $language;
-        $this->form = Form::find($formId);
+        $this->form = $form;
         $this->service = app(FormService::class);
     }
 
@@ -76,7 +73,7 @@ class FormImport implements ToCollection, WithChunkReading, WithHeadingRow
 
                 $options = $lastQuestion->options;
                 $options[] = [
-                    "text" => [["lang" => $this->language, "lang_text" => $option]], 
+                    "text" => $option, 
                     "value" => $row->get("value")
                 ];
                 return $lastQuestion->options = $options;
@@ -84,9 +81,9 @@ class FormImport implements ToCollection, WithChunkReading, WithHeadingRow
         $question = fluent([
             "section" => $this->sections[$row->get("section")],
             "type" => QuestionTypeEnum::MULTIPLE_CHOICE,
-            "text" => [["lang" => $this->language, "lang_text" => $row->get("question")]],
+            "text" => $row->get("question"),
             "options" => [[
-                "text" => [["lang" => $this->language, "lang_text" => $option]], 
+                "text" => $option, 
                 "value" => $row->get("value")
             ]]
         ]);
@@ -99,7 +96,7 @@ class FormImport implements ToCollection, WithChunkReading, WithHeadingRow
         $question = fluent([
             "section" => $this->sections[$row->get("section")],
             "type" => QuestionTypeEnum::PLAIN_TEXT,
-            "text" => [["lang" => $this->language, "lang_text" => $row->get("question")]],
+            "text" => $row->get("question"),
             "value" => $row->get("value")
         ]);
 

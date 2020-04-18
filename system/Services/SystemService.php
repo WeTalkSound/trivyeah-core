@@ -26,10 +26,18 @@ class SystemService
             $tenant = Organization::firstOrCreate(
                 (new Organization($tenantDto->toArray()))->toArray()
             );
-    
+
+            $fqdn = $this->generateBaseFqdn($tenantDto->sub_domain);
+
+            if ($this->host($fqdn)) ResponseHelper::fail(
+                "organization with sub domain already exists"
+            );
+
+            $tenantDto->is_base = true;
+
             Hostname::firstOrCreate([
                 "organization_id" => $tenant->id,
-                "fqdn" => $tenantDto->fqdn], 
+                "fqdn" => $fqdn], 
                 (new Hostname($tenantDto->toArray()))->toArray()
             );
 
@@ -41,15 +49,24 @@ class SystemService
         return $tenant;
     }
 
+    public function generateBaseFqdn($sub_domain)
+    {
+        return $sub_domain . "." . request()->getHttpHost();
+    }
+
+    public function host($fqdn)
+    {
+        return Organization::whereHas("hostNames", function ($hostname) use ($fqdn) {
+            return $hostname->where("fqdn", $fqdn);
+        })->first();
+    }
+
     public function bootstrapTenant(Fluent $dto)
     {
-        $organization = Organization::whereHas("hostNames", function ($hostname) use ($dto) {
-            return $hostname->where("fqdn", $dto->fqdn);
-        })->first();
+        $organization = $this->host($dto->fqdn);
 
-        return $organization == null ?
-            ResponseHelper::fail(
+        return $organization ?: ResponseHelper::fail(
                 "organization not found with hostname"
-            ) : $organization;
+        );
     }
 }
