@@ -63,10 +63,12 @@ class SystemService
 
     public function bootstrapTenant(Fluent $dto)
     {
-        $organization = $this->host($dto->fqdn);
+        if(! $organization = $this->host($dto->fqdn)) {
+            $organization = Organization::whereEmail($dto->email)->first();
+        }
 
         return $organization ?: ResponseHelper::fail(
-                "organization not found with hostname"
+                "organization not found with hostname/email"
         );
     }
 }
