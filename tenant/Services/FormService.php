@@ -161,9 +161,11 @@ class FormService
      */
     public function viewForm(Fluent $formDto)
     {
-        ($form = Form::find($formDto->id)) || ($form = Form::whereSlug($formDto->slug)->first());
+        if (!$form = Form::find($formDto->id)) {
+            $form = Form::whereSlug($formDto->slug)->first();
+        }
 
-        return $form ?: ResponseHelper::fail("form could not be retrieved");
+        return $form ?? ResponseHelper::fail("form could not be retrieved");
     }
 
      /**
