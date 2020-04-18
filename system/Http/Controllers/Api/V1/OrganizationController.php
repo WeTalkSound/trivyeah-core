@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Http\Controllers\Api;
+namespace System\Http\Controllers\Api\v1;
 
 use Illuminate\Http\Request;
 use System\Services\SystemService;

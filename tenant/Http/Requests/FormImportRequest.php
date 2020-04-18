@@ -28,8 +28,9 @@ class FormImportRequest extends FormRequest
     {
         return [
             "file" => "required|string",
-            "lang" => "required|string",
-            "title" => "required|string"
+            "title" => "required|string",
+            "parent_id" => "nullable|exists:forms,id",
+            "lang" => "required_with:parent_id"
         ];
     }
 }

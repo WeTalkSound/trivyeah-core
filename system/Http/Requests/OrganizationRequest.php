@@ -28,7 +28,7 @@ class OrganizationRequest extends FormRequest
     {
         return [
             "name" => "required|string",
-            "fqdn" => "required|string|unique:hostnames",
+            "sub_domain" => "required|string",
             "email" => "required|string|email",
             "user_name" => "required|string",
             "user_email" => "required|string",

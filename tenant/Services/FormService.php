@@ -33,21 +33,21 @@ class FormService
      */
     public function createForm(Fluent $formDto)
     {
-        $formDto->fireEvent == false ?: event(new CreatingForm($formDto));
+        $formDto->fireEvent === false ?: event(new CreatingForm($formDto));
 
         $form = Form::firstOrCreate([
             "title" => $formDto->title], 
             (new Form($formDto->toArray()))->toArray()
         );
 
-        $formDto->fireEvent == false ?: event(new FormCreated($form, $formDto));
+        $formDto->fireEvent === false ?: event(new FormCreated($form, $formDto));
 
         return $form;
     }
 
     public function createSection(Fluent $sectionDto)
     {
-        $sectionDto->fireEvent == false ?: event(new CreatingSection($sectionDto));
+        $sectionDto->fireEvent === false ?: event(new CreatingSection($sectionDto));
 
         $section = Section::firstOrCreate([
                 "form_id" => $sectionDto->getOrFluent("form")->id,
@@ -55,14 +55,14 @@ class FormService
             ], (new Section($sectionDto->toArray()))->toArray()
         );
 
-        $sectionDto->fireEvent == false ?: event(new SectionCreated($section, $sectionDto));
+        $sectionDto->fireEvent === false ?: event(new SectionCreated($section, $sectionDto));
 
         return $section;
     }
 
     public function updateSection(Fluent $sectionDto)
     {
-        $sectionDto->fireEvent == false ?: event(new UpdatingSection($sectionDto));
+        $sectionDto->fireEvent === false ?: event(new UpdatingSection($sectionDto));
 
         $section = Section::updateOrCreate([
                 "id" => $sectionDto->id,
@@ -70,14 +70,14 @@ class FormService
             ], (new Section($sectionDto->toArray()))->toArray()
         );
 
-        $sectionDto->fireEvent == false ?: event(new SectionUpdated($section, $sectionDto));
+        $sectionDto->fireEvent === false ?: event(new SectionUpdated($section, $sectionDto));
 
         return $section;
     }
 
     public function updateQuestion(Fluent $questionDto)
     {
-        $questionDto->fireEvent == false ?: event(new UpdatingQuestion($questionDto));
+        $questionDto->fireEvent === false ?: event(new UpdatingQuestion($questionDto));
 
         $question = Question::updateOrCreate([
                 "id" => $questionDto->id,
@@ -85,7 +85,7 @@ class FormService
             ], (new Question($questionDto->toArray()))->toArray()
         );
 
-        $questionDto->fireEvent == false ?: event(new QuestionUpdated($question, $questionDto));
+        $questionDto->fireEvent === false ?: event(new QuestionUpdated($question, $questionDto));
 
         return $question;
     }
@@ -136,14 +136,14 @@ class FormService
 
     public function createQuestion(Fluent $questionDto)
     {
-        $questionDto->fireEvent == false ?: event(new CreatingQuestion($questionDto));
+        $questionDto->fireEvent === false ?: event(new CreatingQuestion($questionDto));
 
         $question = Question::firstOrCreate([
                 "section_id" => $questionDto->getOrFluent("section")->id,
                 "type" => $questionDto->type,
             ], (new Question($questionDto->toArray()))->toArray());
 
-        $questionDto->fireEvent == false ?: event(new QuestionCreated($question, $questionDto));
+        $questionDto->fireEvent === false ?: event(new QuestionCreated($question, $questionDto));
 
         return $question;
     }
@@ -163,7 +163,7 @@ class FormService
     {
         ($form = Form::find($formDto->id)) || ($form = Form::whereSlug($formDto->slug)->first());
 
-        return $form ?: Response::fail("form could not be retrieved");
+        return $form ?: ResponseHelper::fail("form could not be retrieved");
     }
 
      /**
@@ -174,11 +174,11 @@ class FormService
     {
         $form = Form::findOrFail($formDto->id);
 
-        $formDto->fireEvent == false ?: event(new UpdatingForm($form));
+        $formDto->fireEvent === false ?: event(new UpdatingForm($form));
 
         $form->update($formDto->toArray());
 
-        $formDto->fireEvent == false ?: event(new FormUpdated($form, $formDto));
+        $formDto->fireEvent === false ?: event(new FormUpdated($form, $formDto));
 
         return $form->refresh();
     }
@@ -205,11 +205,11 @@ class FormService
     {
         $form = Form::find($formDto->id);
 
-        $formDto->fireEvent == false ?: event(new DeletingForm($form));
+        $formDto->fireEvent === false ?: event(new DeletingForm($form));
 
         $form->delete();
 
-        $formDto->fireEvent == false ?: event(new FormDeleted($form));
+        $formDto->fireEvent === false ?: event(new FormDeleted($form));
     }
 
     public function import(Fluent $dto)
@@ -221,7 +221,7 @@ class FormService
         $importPath = $fileService->createFileFromBase64($dto->file, "csv");
 
         try {
-            Excel::import(new FormImport($dto->lang, $form->id), $importPath);
+            Excel::import(new FormImport($form), $importPath);
         } catch (\Exception $e) {
             throw $e;
         } finally {
@@ -229,6 +229,7 @@ class FormService
             
         }
 
+        return $form;
 
     }
 }

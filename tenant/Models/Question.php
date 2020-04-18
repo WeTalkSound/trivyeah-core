@@ -28,7 +28,6 @@ class Question extends Model implements Sortable
 
     protected $casts = [
         "meta" => "array",
-        "text" => "array",
     ];
 
     /**

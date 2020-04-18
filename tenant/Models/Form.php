@@ -17,7 +17,7 @@ class Form extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'slug', 'published_at'
+        'title', 'slug', 'lang', 'parent_id', 'published_at'
     ];
 
     /**
@@ -42,6 +42,11 @@ class Form extends Model
     public function theme()
     {
         return $this->hasOne(Theme::class);
+    }
+
+    public function languages()
+    {
+        return $this->hasMany(static::class, "parent_id");
     }
 
     /**

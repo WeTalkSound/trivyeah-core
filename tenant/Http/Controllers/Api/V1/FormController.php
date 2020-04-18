@@ -1,6 +1,6 @@
 <?php
 
-namespace Tenant\Http\Controllers\Api;
+namespace Tenant\Http\Controllers\Api\V1;
 
 use Illuminate\Http\Request;
 use Tenant\Services\FormService;
@@ -49,8 +49,8 @@ class FormController extends Controller
 
     public function import(FormImportRequest $request, FormService $service)
     {
-        $service->import($request->dto());
+        $form = $service->import($request->dto());
 
-        return ResponseHelper::success("Form import queued successfully");
+        return new FormResource($form);
     }
 }

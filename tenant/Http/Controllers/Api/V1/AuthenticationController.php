@@ -1,19 +1,19 @@
 <?php
 
-namespace System\Http\Controllers\Api;
+namespace Tenant\Http\Controllers\Api\V1;
 
 use Illuminate\Http\Request;
-use System\Services\SystemService;
+use Tenant\Services\TenantService;
 use TrivYeah\Support\Authenticator;
-use System\Http\Requests\UserRequest;
-use System\Http\Controllers\Controller;
-use System\Http\Resources\UserResource;
-use System\Http\Requests\AuthenticationRequest;
+use Tenant\Http\Requests\UserRequest;
+use Tenant\Http\Controllers\Controller;
+use Tenant\Http\Resources\UserResource;
+use Tenant\Http\Requests\AuthenticationRequest;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AuthenticationController extends Controller
 {
-    public function create(UserRequest $request, SystemService $service)
+    public function create(UserRequest $request, TenantService $service)
     {
         $user = $service->createUser($request->validated());
 

@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
-use System\Http\Controllers\Api\OrganizationController;
-use System\Http\Controllers\Api\AuthenticationController;
+use System\Http\Controllers\Api\v1\OrganizationController;
+use System\Http\Controllers\Api\V1\AuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,10 +19,12 @@ Route::any("health-check", function () {
     return System\Models\Organization::first();
 });
 
-Route::post("create-user", AuthenticationController::class . "@create");
-Route::post("authenticate", AuthenticationController::class . "@authenticate");
-
-Route::group(["prefix" => "organization"], function () {
-    Route::post("create", OrganizationController::class . "@create");
-    Route::post("bootstrap", OrganizationController::class . "@bootstrap");
+Route::group(["prefix" => "v1"], function (){
+    Route::post("create-user", AuthenticationController::class . "@create");
+    Route::post("authenticate", AuthenticationController::class . "@authenticate");
+    Route::get("bootstrap", OrganizationController::class . "@bootstrap");
+    
+    Route::group(["prefix" => "organization"], function () {
+        Route::post("create", OrganizationController::class . "@create");
+    });
 });

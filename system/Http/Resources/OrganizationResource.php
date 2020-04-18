@@ -18,7 +18,7 @@ class OrganizationResource extends JsonResource
             "id" => $this->id,
             "name" => $this->name,
             "email" => $this->email,
-            "host_names" => HostnameResource::collection($this->hostNames)
+            "base_url" => $this->baseUrl()
         ];
     }
 }
