@@ -67,28 +67,31 @@ class FormImport implements ToCollection, WithChunkReading, WithHeadingRow
     protected function pushQuestionWithOptions($row)
     {
         $option = $row->get("option");
+        $question = $row->get("question");
 
-        if (($lastQuestion = end($this->questions)) && 
-            $lastQuestion->type == QuestionTypeEnum::MULTIPLE_CHOICE) {
-
-                $options = $lastQuestion->options;
-                $options[] = [
+        if ($option && $question) {
+            $question = fluent([
+                "section" => $this->sections[$row->get("section")],
+                "type" => QuestionTypeEnum::MULTIPLE_CHOICE,
+                "text" => $question,
+                "options" => [[
+                    "text" => $option, 
+                "text" => $option, 
                     "text" => $option, 
                     "value" => $row->get("value")
-                ];
-                return $lastQuestion->options = $options;
+                ]]
+            ]);
+            return array_push($this->questions, $question);
         }
-        $question = fluent([
-            "section" => $this->sections[$row->get("section")],
-            "type" => QuestionTypeEnum::MULTIPLE_CHOICE,
-            "text" => $row->get("question"),
-            "options" => [[
+
+        if (($lastQuestion = end($this->questions)) && $lastQuestion->type == QuestionTypeEnum::MULTIPLE_CHOICE) {
+            $options = $lastQuestion->options;
+            $options[] = [
                 "text" => $option, 
                 "value" => $row->get("value")
-            ]]
-        ]);
-
-        $this->questions[] = $question;
+            ];
+            return $lastQuestion->options = $options;
+        }
     }
 
     protected function pushQuestionWithoutOptions($row)

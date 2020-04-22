@@ -138,10 +138,9 @@ class FormService
     {
         $questionDto->fireEvent === false ?: event(new CreatingQuestion($questionDto));
 
-        $question = Question::firstOrCreate([
-                "section_id" => $questionDto->getOrFluent("section")->id,
-                "type" => $questionDto->type,
-            ], (new Question($questionDto->toArray()))->toArray());
+        $questionDto->section_id = $questionDto->getOrFluent("section")->id;
+
+        $question = Question::create($questionDto->toArray());
 
         $questionDto->fireEvent === false ?: event(new QuestionCreated($question, $questionDto));
 
