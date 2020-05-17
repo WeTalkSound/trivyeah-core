@@ -2,6 +2,7 @@
 
 namespace Tenant\Models;
 
+use TrivYeah\Traits\Savable;
 use TrivYeah\Traits\UsesJWT;
 use TrivYeah\Traits\HashesPassword;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -11,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable, UsesJWT, HashesPassword;
+    use Notifiable, UsesJWT, HashesPassword, Savable;
 
     /**
      * The attributes that are mass assignable.

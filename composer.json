@@ -40,7 +40,8 @@
         "psr-4": {
             "System\\": "system/",
             "Tenant\\": "tenant",
-            "TrivYeah\\": "trivyeah"
+            "TrivYeah\\": "trivyeah",
+            "Trivyeah\\": "trivyeah"
         },
         "classmap": [
             "system/database/seeds",

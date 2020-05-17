@@ -2,10 +2,12 @@
 
 namespace Tenant\Models;
 
+use TrivYeah\Traits\Savable;
 use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
 {
+    use Savable;
     
     /**
      * The attributes that are mass assignable.

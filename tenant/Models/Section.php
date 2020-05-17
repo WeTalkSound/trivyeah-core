@@ -2,13 +2,14 @@
 
 namespace Tenant\Models;
 
+use TrivYeah\Traits\Savable;
 use Spatie\EloquentSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\EloquentSortable\SortableTrait;
 
 class Section extends Model implements Sortable
 {
-    use SortableTrait;
+    use SortableTrait, Savable;
     
     /**
      * The attributes that are mass assignable.

@@ -4,7 +4,7 @@ namespace Tenant\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class QuestionResource extends JsonResource
+class ResponseResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +16,11 @@ class QuestionResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "order" => $this->order,
-            "type" => $this->type,
-            "text" => $this->text,
-            "options" => $this->options,
-            "value" => $this->value,
+            "user_identifier" => $this->user_identifier,
+            "processed" => $this->processed,
+            "processor" => $this->processor,
+            "tp_processed" => $this->tp_processed,
+            "answers" => AnswerResource::collection($this->answers),
         ];
     }
 }
