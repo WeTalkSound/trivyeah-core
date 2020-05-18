@@ -2,20 +2,26 @@
 
 namespace Tenant\Events\Response;
 
+use Tenant\Models\Response;
 use TrivYeah\Support\Fluent;
+use Illuminate\Support\Collection;
 use Illuminate\Broadcasting\Channel;
+use TrivYeah\Abstracts\HookableEvent;
 use Illuminate\Queue\SerializesModels;
+use Tenant\Http\Resources\FormResource;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class EndResponse
+class EndResponse implements HookableEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $dto;
+
+    public $form;
 
     /**
      * Create a new event instance.
@@ -25,5 +31,34 @@ class EndResponse
     public function __construct(Fluent $dto)
     {
         $this->dto = $dto;
+    }
+
+    public static function name(): string
+    {
+        return "end_response";
+    }
+
+    public function load(): array
+    {
+        $form = $this->form();
+        
+        $formResource = new FormResource($form);
+
+        $load['form'] = $formResource->toArray();
+        $load['answers'] = $this->dto->getOrCollect("answers")->toArray();
+
+        return $load;
+    }
+
+    public function form()
+    {
+        return $this->form ?: $this->form = Response::with('form')
+                                ->findOrFail($this->dto->id)->form;
+    }
+
+    public function hooks(): Collection
+    {
+        return $this->form()->hooks()
+            ->where('event', static::name())->get();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tenant\Listeners;
+namespace Tenant\Hooks;
 
 use Tenant\Models\Form;
 use Tenant\Models\Response;

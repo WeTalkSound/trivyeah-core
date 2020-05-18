@@ -36,4 +36,9 @@ class Processor
     {
         return array_keys($this->processors);
     }
+
+    public function allToString()
+    {
+        return implode(",", $this->all());
+    }
 }

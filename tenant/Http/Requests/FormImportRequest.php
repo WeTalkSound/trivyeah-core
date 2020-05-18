@@ -2,6 +2,7 @@
 
 namespace Tenant\Http\Requests;
 
+use TrivYeah\Facades\Processor;
 use TrivYeah\Traits\FailsValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -30,7 +31,9 @@ class FormImportRequest extends FormRequest
             "file" => "required|string",
             "title" => "required|string",
             "parent_id" => "nullable|exists:forms,id",
-            "lang" => "required_with:parent_id"
+            "lang" => "required_with:parent_id",
+            "max_response" => "nullable|integer|min:0",
+            "processor" => "nullbale|string|in:" . Processor::allToString(),
         ];
     }
 }

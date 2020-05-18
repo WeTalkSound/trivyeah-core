@@ -96,7 +96,7 @@ class ResponseService
         $processed = $processor->process($response, $answers);
         $response->saveProcessed($processed, $processor);
 
-        event(new EndResponseProcessing($answers, $response));
+        event(new EndResponseProcessing($response->refresh()));
         
     }
 }

@@ -3,6 +3,7 @@
 namespace Tenant\Services;
 
 use Tenant\Models\Form;
+use Tenant\Models\Hook;
 use Tenant\Models\Section;
 use Tenant\Models\Question;
 use TrivYeah\Support\Fluent;
@@ -56,6 +57,14 @@ class FormService
         return $section;
     }
 
+    public function createHook(Fluent $hookDto)
+    {
+        $hookDto->form_id = $hookDto->getOrFluent("form")->id;
+
+        return Hook::fit($hookDto->toArray())
+                    ->firstOrSave("form_id", "name");
+    }
+
     public function updateSection(Fluent $sectionDto)
     {
         $sectionDto->fireEvent(new UpdatingSection($sectionDto));
@@ -68,6 +77,14 @@ class FormService
         $sectionDto->fireEvent(new SectionUpdated($section, $sectionDto));
 
         return $section;
+    }
+
+    public function updateHook(Fluent $hookDto)
+    {
+        $hookDto->form_id = $hookDto->getOrFluent("form")->id;
+
+        return Hook::fit($hookDto->toArray())
+                    ->updateOrSave("form_id", "id");
     }
 
     public function updateQuestion(Fluent $questionDto)
@@ -105,6 +122,30 @@ class FormService
         })->map(function ($sectionDto) use ($form) {
             $sectionDto->form = $form;
             $this->createSection($sectionDto);
+        });
+    }
+
+    public function handleHooks(Collection $hooks, Form $form)
+    {
+        //Get the existing hooks from the dto and
+        //reconcile it with the ones currently stored
+        //before updating and/or creating existing/new
+        //hooks
+        $hookIds = $hooks->pluck("id");
+        $this->syncHook($hookIds, $form);
+
+        $hooks->filter(function($hookDto) {
+            return $hookDto->has("id");
+        })->map(function ($hookDto) use ($form) {
+            $hookDto->form = $form;
+            $this->updateHook($hookDto);
+        });
+
+        $hooks->reject(function($hookDto) {
+            return $hookDto->has("id");
+        })->map(function ($hookDto) use ($form) {
+            $hookDto->form = $form;
+            $this->createHook($hookDto);
         });
     }
 
@@ -180,13 +221,26 @@ class FormService
 
     public function syncSection(Collection $sectionIds, Form $form)
     {
+        if ($sectionIds->isEmpty()) return;
+
         Section::where("form_id", $form->id)->whereNotIn(
             "id", $sectionIds->filter()->toArray()
         )->delete();
     }
 
+    public function syncHook(Collection $hookIds, Form $form)
+    {
+        if ($hookIds->isEmpty()) return;
+
+        Hook::where("form_id", $form->id)->whereNotIn(
+            "id", $hookIds->filter()->toArray()
+        )->delete();
+    }
+
     public function syncQuestion(Collection $questionIds, Section $section)
     {
+        if ($questionIds->isEmpty()) return;
+
         Question::where("section_id", $section->id)->whereNotIn(
             "id", $questionIds->filter()->toArray()
         )->delete();

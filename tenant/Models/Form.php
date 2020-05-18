@@ -39,6 +39,11 @@ class Form extends Model
         return $this->hasMany(Response::class);
     }
 
+    public function hooks()
+    {
+        return $this->hasMany(Hook::class);
+    }
+
     /**
      * Themes
      */
