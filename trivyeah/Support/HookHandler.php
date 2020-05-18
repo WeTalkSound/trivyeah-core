@@ -48,8 +48,6 @@ class HookHandler
 
     public function listener()
     {
-        return function ($event) {
-            
-        };
+        return ProcessHook::class;
     }
 }
