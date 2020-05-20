@@ -3,6 +3,7 @@
 namespace Tenant\Http\Requests;
 
 use TrivYeah\Facades\Processor;
+use TrivYeah\Facades\HookHandler;
 use Tenant\Enums\QuestionTypeEnum;
 use TrivYeah\Traits\FailsValidation;
 use Illuminate\Foundation\Http\FormRequest as BaseFormRequest;
@@ -53,7 +54,7 @@ class FormRequest extends BaseFormRequest
                     "hooks" => "nullable|array",
                     "hooks.*.id" => "integer|exists_with:hooks,id,form_id,id",
                     "hooks.*.name" => "required|string",
-                    "hooks.*.event" => "required|string",
+                    "hooks.*.event" => "required|string|in:" . HookHandler::allToString(),
                     "hooks.*.callback" => "required|url",
                     "sections" => "array",
                     "sections.*.id" => "integer|exists_with:sections,id,form_id,id",

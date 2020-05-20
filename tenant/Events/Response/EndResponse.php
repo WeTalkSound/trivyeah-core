@@ -2,6 +2,7 @@
 
 namespace Tenant\Events\Response;
 
+use Tenant\Models\Form;
 use Tenant\Models\Response;
 use TrivYeah\Support\Fluent;
 use Illuminate\Support\Collection;
@@ -44,13 +45,13 @@ class EndResponse implements HookableEvent
         
         $formResource = new FormResource($form);
 
-        $load['form'] = $formResource->toArray();
+        $load['form'] = $formResource->toArray(request());
         $load['answers'] = $this->dto->getOrCollect("answers")->toArray();
 
         return $load;
     }
 
-    public function form()
+    public function form(): Form
     {
         return $this->form ?: $this->form = Response::with('form')
                                 ->findOrFail($this->dto->id)->form;

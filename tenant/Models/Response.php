@@ -60,4 +60,9 @@ class Response extends Model
         
         return $this->saveOnly();
     }
+
+    public function hookResponses()
+    {
+        return $this->hasMany(HookResponse::class);
+    }
 }

@@ -19,8 +19,8 @@ class ResponseResource extends JsonResource
             "user_identifier" => $this->user_identifier,
             "processed" => $this->processed,
             "processor" => $this->processor,
-            "tp_processed" => $this->tp_processed,
-            "answers" => AnswerResource::collection($this->answers),
+            "hook_responses" => HookResponseResource::collection($this->hookResponses),
+            "answers" => AnswerResource::collection($this->answers)
         ];
     }
 }

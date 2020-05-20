@@ -2,6 +2,7 @@
 
 namespace Tenant\Events\Response;
 
+use Tenant\Models\Form;
 use Tenant\Models\Response;
 use TrivYeah\Support\Fluent;
 use TrivYeah\Traits\Permissible;
@@ -9,6 +10,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Broadcasting\Channel;
 use TrivYeah\Abstracts\HookableEvent;
 use Illuminate\Queue\SerializesModels;
+use Tenant\Http\Resources\FormResource;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -47,13 +49,13 @@ class BeginResponseProcessing implements HookableEvent
         
         $formResource = new FormResource($form);
 
-        $load['form'] = $formResource->toArray();
+        $load['form'] = $formResource->toArray(request());
         $load['answers'] = $this->answers->toArray();
 
         return $load;
     }
 
-    public function form()
+    public function form(): Form
     {
         return $this->form ?: $this->form = $this->response->form;
     }

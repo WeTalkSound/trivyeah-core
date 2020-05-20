@@ -45,13 +45,13 @@ class BeginResponse implements HookableEvent
         
         $formResource = new FormResource($form);
 
-        $load['form'] = $formResource->toArray();
+        $load['form'] = $formResource->toArray(request());
         $load['user_identifier'] = $this->dto->user_identifier;
 
         return $load;
     }
 
-    public function form()
+    public function form(): Form
     {
         return $this->form ?: $this->form = Form::findOrFail($this->dto->form_id);
     }

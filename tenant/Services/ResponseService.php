@@ -6,6 +6,7 @@ use Exception;
 use Tenant\Models\Answer;
 use Tenant\Models\Response;
 use TrivYeah\Support\Fluent;
+use TrivYeah\Facades\HookHandler;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use TrivYeah\Support\ResponseHelper;
@@ -40,7 +41,9 @@ class ResponseService
 
         $dto->fireEvent(new ResponseBegan($response));
 
-        return $response;
+        HookHandler::storeInRequestHookResponses($response);
+
+        return $response->refresh();
     }
 
     public function end(Fluent $dto)
@@ -76,6 +79,8 @@ class ResponseService
 
 
         $dto->fireEvent(new ResponseEnded($response));
+
+        HookHandler::storeInRequestHookResponses($response);
 
         return $response->refresh();
     }

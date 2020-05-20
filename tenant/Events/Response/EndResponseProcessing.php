@@ -2,6 +2,7 @@
 
 namespace Tenant\Events\Response;
 
+use Tenant\Models\Form;
 use Tenant\Models\Response;
 use TrivYeah\Support\Fluent;
 use Illuminate\Support\Collection;
@@ -23,6 +24,8 @@ class EndResponseProcessing implements HookableEvent
     public $response;
 
     public $processed;
+
+    public $form;
 
 
     /**
@@ -47,13 +50,13 @@ class EndResponseProcessing implements HookableEvent
         $formResource = new FormResource($form);
         $responseResource = new ResponseResource($this->response);
 
-        $load['form'] = $formResource->toArray();
-        $load['response'] = $responseResource->toArray();
+        $load['form'] = $formResource->toArray(request());
+        $load['response'] = $responseResource->toArray(request());
 
         return $load;
     }
 
-    public function form()
+    public function form(): Form
     {
         return $this->form ?: $this->form = $this->response->form;
     }

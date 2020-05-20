@@ -2,6 +2,7 @@
 
 namespace Tenant\Events\Response;
 
+use Tenant\Models\Form;
 use Tenant\Models\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Broadcasting\Channel;
@@ -45,13 +46,13 @@ class ResponseBegan implements HookableEvent
         $formResource = new FormResource($form);
         $responseResource = new ResponseResource($this->response);
 
-        $load['form'] = $formResource->toArray();
-        $load['response'] = $responseResource->toArray();
+        $load['form'] = $formResource->toArray(request());
+        $load['response'] = $responseResource->toArray(request());
 
         return $load;
     }
 
-    public function form()
+    public function form(): Form
     {
         return $this->form ?: $this->form = $this->response->form;
     }
