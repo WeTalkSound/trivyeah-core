@@ -23,7 +23,7 @@ class ProcessHookInRequest
      */
     public function handle($event)
     {
-        $client     = new Client(['timeout' => 3, 'verify' => false]);
+        $client     = new Client(['timeout' => 6, 'verify' => false]);
         $load       = $event->load();
 
         foreach ($event->hooks() as $hook) {

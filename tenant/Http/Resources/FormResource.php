@@ -18,6 +18,8 @@ class FormResource extends JsonResource
             "id" => $this->id,
             "title" => $this->title,
             "slug" => $this->slug,
+            'max_response' => $this->max_response,
+            'processor' => $this->processor,
             "sections" => SectionResource::collection($this->sections),
             "hooks" => HookResource::collection($this->hooks)
         ];
