@@ -178,6 +178,8 @@ return [
         Tenancy\Hooks\Database\Provider::class,
         Tenancy\Hooks\Migration\Provider::class,
         Tenancy\Database\Drivers\Mysql\Provider::class,
+        System\Providers\ProcessorServiceProvider::class,
+        System\Providers\HookServiceProvider::class,
     ],
 
     /*
@@ -228,6 +230,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Processor' => TrivYeah\Facades\Processor::class,
+        'HookHandler' => TrivYeah\Facades\HookHandler::class,
 
     ],
 

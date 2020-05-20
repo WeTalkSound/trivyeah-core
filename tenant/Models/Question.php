@@ -3,6 +3,7 @@
 namespace Tenant\Models;
 
 use TrivYeah\Traits\HasMeta;
+use TrivYeah\Traits\Savable;
 use Spatie\EloquentSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\EloquentSortable\SortableTrait;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Question extends Model implements Sortable
 {
-    use SortableTrait, HasMeta;
+    use SortableTrait, HasMeta, Savable;
     
     /**
      * The attributes that are mass assignable.
@@ -36,6 +37,11 @@ class Question extends Model implements Sortable
     public function section()
     {
         return $this->belongsTo(Section::class);
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
     }
 
     public function meta()

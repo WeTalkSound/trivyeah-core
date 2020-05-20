@@ -2,6 +2,8 @@
 
 namespace Tenant\Http\Requests;
 
+use TrivYeah\Facades\Processor;
+use TrivYeah\Facades\HookHandler;
 use Tenant\Enums\QuestionTypeEnum;
 use TrivYeah\Traits\FailsValidation;
 use Illuminate\Foundation\Http\FormRequest as BaseFormRequest;
@@ -38,14 +40,23 @@ class FormRequest extends BaseFormRequest
                     "parent_id" => "nullable|exists:forms,id",
                     "title" => "required|string",
                     "slug" => "nullable|string|unique:forms",
-                    "lang" => "required_with:parent_id"
+                    "lang" => "required_with:parent_id",
+                    "max_response" => "nullable|integer|min:0",
+                    "processor" => "nullbale|string|in:" . Processor::allToString(),
                 ];
             case "PUT":
                 return [
                     "id" => "required|integer|exists:forms",
-                    "title" => "required|string",
+                    "title" => "string",
                     "slug" => "nullable|string|unique:forms,slug," . $this->id,
-                    "sections" => "required|array",
+                    "max_response" => "nullable|integer|min:0",
+                    "processor" => "nullbale|string|in:" . Processor::allToString(),
+                    "hooks" => "nullable|array",
+                    "hooks.*.id" => "integer|exists_with:hooks,id,form_id,id",
+                    "hooks.*.name" => "required|string",
+                    "hooks.*.event" => "required|string|in:" . HookHandler::allToString(),
+                    "hooks.*.callback" => "required|url",
+                    "sections" => "array",
                     "sections.*.id" => "integer|exists_with:sections,id,form_id,id",
                     "sections.*.title" => "string|nullable",
                     "sections.*.questions" => "required|array",

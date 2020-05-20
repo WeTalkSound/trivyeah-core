@@ -2,14 +2,16 @@
 
 namespace Tenant\Models;
 
+use TrivYeah\Traits\Savable;
 use Spatie\Sluggable\HasSlug;
+use TrivYeah\Facades\Processor;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Form extends Model
 {
-    use HasSlug;
+    use HasSlug, Savable;
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +19,8 @@ class Form extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'slug', 'lang', 'parent_id', 'published_at'
+        'title', 'slug', 'lang', 'parent_id', 
+        'published_at', 'max_response', 'processor'
     ];
 
     /**
@@ -34,6 +37,11 @@ class Form extends Model
     public function responses()
     {
         return $this->hasMany(Response::class);
+    }
+
+    public function hooks()
+    {
+        return $this->hasMany(Hook::class);
     }
 
     /**
@@ -57,5 +65,10 @@ class Form extends Model
         return SlugOptions::create()
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
+    }
+
+    public function getProcessor()
+    {
+        return Processor::find($this->processor);
     }
 }

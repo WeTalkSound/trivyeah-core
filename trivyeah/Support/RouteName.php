@@ -14,4 +14,6 @@ class RouteName
     const DELETE_FORM = "delete-form";
     const UPDATE_FORM = "update-form";
     const IMPORT_FORM = "import-form";
+    const BEGIN_RESPONSE = "begin-response";
+    const END_RESPONSE = "end-response";
 }

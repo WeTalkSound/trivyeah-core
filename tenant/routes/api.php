@@ -2,6 +2,7 @@
 
 use TrivYeah\Support\RouteName as RN;
 use Tenant\Http\Controllers\Api\V1\FormController;
+use Tenant\Http\Controllers\Api\V1\ResponseController;
 use Tenant\Http\Controllers\Api\V1\AuthenticationController;
 
 
@@ -31,6 +32,11 @@ Route::group(["prefix" => "v1"], function () {
         Route::get("view/{slug?}", FormController::class . "@viewForm")->name(RN::VIEW_FORM);
         Route::delete("delete", FormController::class . "@deleteForm")->name(RN::DELETE_FORM);
         Route::post("import", FormController::class . "@import")->name(RN::IMPORT_FORM);
+    });
+
+    Route::group(["prefix" => "response"], function () {
+        Route::post("begin", ResponseController::class . "@begin")->name(RN::BEGIN_RESPONSE);
+        Route::put("end", ResponseController::class . "@end")->name(RN::END_RESPONSE);
     });
 });
 

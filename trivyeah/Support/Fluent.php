@@ -20,4 +20,14 @@ class Fluent extends Base
     {
         return (bool) $this->get($attribute);
     }
+
+    public function fireEvent($eventInstance)
+    {
+        $this->shouldNotFireEvent() ?: event($eventInstance);
+    }
+
+    public function shouldNotFireEvent()
+    {
+        return $this->fireEvent === false;
+    }
 }
