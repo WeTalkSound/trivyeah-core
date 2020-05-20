@@ -38,7 +38,7 @@ class ResponseRequest extends FormRequest
                     "answers" => "required|array",
                     "answers.*.question_id" => "required|integer|exists:questions,id",
                     "answers.*.text" => "required|string",
-                    "answers.*.value" => "required"
+                    "answers.*.value" => "nullable"
                 ];
         }
     }
