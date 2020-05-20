@@ -19,7 +19,7 @@ class Question extends Model implements Sortable
      * @var array
      */
     protected $fillable = [
-        'section_id', 'type', 'order', 'text'
+        'id','section_id', 'type', 'order', 'text'
     ];
 
     public $sortable = [

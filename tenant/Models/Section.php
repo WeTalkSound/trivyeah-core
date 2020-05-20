@@ -17,7 +17,7 @@ class Section extends Model implements Sortable
      * @var array
      */
     protected $fillable = [
-        'title', 'form_id', 'order'
+        'id','title', 'form_id', 'order'
     ];
 
     public $sortable = [

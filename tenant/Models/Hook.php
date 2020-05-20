@@ -10,6 +10,6 @@ class Hook extends Model
     use Savable;
     
     protected $fillable = [
-        'form_id', 'name', 'event', 'callback'
+        'id','form_id', 'name', 'event', 'callback'
     ];
 }

@@ -19,7 +19,7 @@ class FormResource extends JsonResource
             "title" => $this->title,
             "slug" => $this->slug,
             "sections" => SectionResource::collection($this->sections),
-            "languages" => static::collection($this->languages)
+            "hooks" => HookResource::collection($this->hooks)
         ];
     }
 }

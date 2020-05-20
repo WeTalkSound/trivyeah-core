@@ -17,7 +17,8 @@ class HookResource extends JsonResource
         return [
             "id" => $this->id,
             "name" => $this->name,
-            "event" => $this->event
+            "event" => $this->event,
+            "callback" => $this->callback
         ];
     }
 }
