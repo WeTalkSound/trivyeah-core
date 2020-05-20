@@ -123,10 +123,6 @@ class FormImport implements ToCollection, WithChunkReading, WithHeadingRow
             ) {
                 $this->errors[] = "Type field is required on line $rowNumber and should be: " . (string)QuestionTypeEnum::new();
             }
-
-            if ($row->get("option") && ($row->get("value") === null || $row->get("value") < 0)) {
-                $this->errors[] = "Value field is required on line $rowNumber and should not be less than zero";
-            }
         });
     }
 }

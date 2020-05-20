@@ -65,8 +65,8 @@ class FormRequest extends BaseFormRequest
                     "sections.*.questions.*.text" => "required|string",
                     "sections.*.questions.*.options" => "nullable|required_if:sections.*.questions.*.type," . QuestionTypeEnum::MULTIPLE_CHOICE ."|array",
                     "sections.*.questions.*.options.*.text" => "required|string",
-                    "sections.*.questions.*.options.*.value" => "required|integer",
-                    "sections.*.questions.*.value" => "nullable|required_if:sections.*.questions.*.type," . QuestionTypeEnum::PLAIN_TEXT . "|integer",
+                    "sections.*.questions.*.options.*.value" => "nullable",
+                    "sections.*.questions.*.value" => "nullable|required_if:sections.*.questions.*.type," . QuestionTypeEnum::PLAIN_TEXT,
                 ];
         }
     }
