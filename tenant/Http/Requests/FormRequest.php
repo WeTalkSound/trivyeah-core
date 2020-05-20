@@ -50,7 +50,7 @@ class FormRequest extends BaseFormRequest
                     "title" => "string",
                     "slug" => "nullable|string|unique:forms,slug," . $this->id,
                     "max_response" => "nullable|integer|min:0",
-                    "processor" => "nullbale|string|in:" . Processor::allToString(),
+                    "processor" => "nullable|string|in:" . Processor::allToString(),
                     "hooks" => "nullable|array",
                     "hooks.*.id" => "integer|exists_with:hooks,id,form_id,id",
                     "hooks.*.name" => "required|string",
