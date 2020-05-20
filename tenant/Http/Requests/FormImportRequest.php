@@ -33,7 +33,7 @@ class FormImportRequest extends FormRequest
             "parent_id" => "nullable|exists:forms,id",
             "lang" => "required_with:parent_id",
             "max_response" => "nullable|integer|min:0",
-            "processor" => "nullbale|string|in:" . Processor::allToString(),
+            "processor" => "nullable|string|in:" . Processor::allToString(),
         ];
     }
 }
