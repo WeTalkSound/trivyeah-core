@@ -180,6 +180,7 @@ return [
         Tenancy\Database\Drivers\Mysql\Provider::class,
         System\Providers\ProcessorServiceProvider::class,
         System\Providers\HookServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
     ],
 
     /*
