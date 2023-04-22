@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-use System\Http\Controllers\Api\v1\OrganizationController;
+use System\Http\Controllers\Api\V1\OrganizationController;
 use System\Http\Controllers\Api\V1\AuthenticationController;
 
 /*
