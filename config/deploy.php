@@ -60,7 +60,7 @@ return [
             // 'artisan:storage:link',
             // 'artisan:view:clear',
             // 'artisan:config:cache',
-            // 'artisan:migrate',
+            'artisan:migrate',
             // 'artisan:horizon:terminate',
         ],
         
