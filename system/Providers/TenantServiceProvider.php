@@ -23,6 +23,8 @@ class TenantServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->resolveTenancy();
+
         include_once(base_path("tenant/helpers.php"));
 
         Environment::mixin(new TenancyMixin);
@@ -30,16 +32,16 @@ class TenantServiceProvider extends ServiceProvider
         $this->registerTenantSettings();
     }
 
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
+    // public function register()
+    // {
+    //     $this->resolveTenancy();
+    // }
+
+    public function resolveTenancy()
     {
         $this->app->resolving(ResolvesTenants::class, function (ResolvesTenants $resolver) {
             $resolver->addModel(Organization::class);
-            
+
             return $resolver;
         });
 
