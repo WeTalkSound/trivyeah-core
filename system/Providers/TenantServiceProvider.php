@@ -30,10 +30,10 @@ class TenantServiceProvider extends ServiceProvider
         $this->registerTenantSettings();
     }
 
-    // public function register()
-    // {
-    //     $this->resolveTenancy();
-    // }
+    public function register()
+    {
+        $this->resolveTenancy();
+    }
 
     public function resolveTenancy()
     {
