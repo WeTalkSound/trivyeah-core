@@ -23,8 +23,6 @@ class TenantServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->resolveTenancy();
-
         include_once(base_path("tenant/helpers.php"));
 
         Environment::mixin(new TenancyMixin);
