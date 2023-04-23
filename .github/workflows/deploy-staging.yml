@@ -20,25 +20,27 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
        
-    # Deliver to server
-    - name: copy files via ssh to server
-      uses: appleboy/scp-action@master
+    # Setup PHP
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        source: "*"
-        target: "/var/www/trivyeah-backend"
+          php-version: 7.3
+    - uses: "ramsey/composer-install@v1"
+
+    - name: 'Create env file'
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
+
+    - name: Install Dependencies
+      run: COMPOSER_MEMORY_LIMIT=-1 composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
     # Runs a set of commands using the runners shell
-    - name: Post Deploy Scripts
-      uses: appleboy/ssh-action@master
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        script: |
-          cd /var/www/trivyeah-backend
-          composer install --no-interaction
-          php artisan migrate
-          sudo chmod 777 -R storage/
+        key: ${{ secrets.SSH_KEY }}
+        name: trivyeah
+        if_key_exists: replace
+
+    - name: Deploy to server
+      run: php artisan deploy staging -v
