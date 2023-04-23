@@ -25,14 +25,13 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
           php-version: 7.3
-    - uses: ramsey/composer-install@v1
 
     - name: 'Create env file'
       run: |
           echo "${{ secrets.ENV_FILE }}" > .env
 
     - name: Install Dependencies
-      run: COMPOSER_MEMORY_LIMIT=-1 composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      run: composer self-update --1 && COMPOSER_MEMORY_LIMIT=-1 composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
     # Runs a set of commands using the runners shell
     - name: Install SSH key
