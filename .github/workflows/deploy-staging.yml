@@ -25,6 +25,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
           php-version: 7.3
+
     - uses: "ramsey/composer-install@v1"
 
     - name: 'Create env file'
